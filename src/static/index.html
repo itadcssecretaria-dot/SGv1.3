@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SG - Servir e Gerir</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div id="loginScreen" class="screen active">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="logo">
+                        <div class="logo-icon">SG</div>
+                        <div class="logo-text">
+                            <h1>Servir e Gerir</h1>
+                            <p>Sistema de Gestão da Cantina</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" name="password" required placeholder="••••••••">
+                    </div>
+                    
+                    <button type="submit" class="btn-primary btn-login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Entrar
+                    </button>
+                </form>
+                
+                <div class="login-footer">
+                    <p>Assembleia de Deus Chamados para Servir (ADCS)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela Principal do Sistema -->
+    <div id="mainScreen" class="screen">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button id="menuToggle" class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo-mini">
+                    <span class="logo-icon-mini">SG</span>
+                    <span class="logo-text-mini">Servir e Gerir</span>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <div class="user-info">
+                    <span id="userName">Usuário</span>
+                    <span id="userRole" class="user-role">Administrador</span>
+                </div>
+                <button id="logoutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" data-page="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="vendas">
+                        <i class="fas fa-cash-register"></i>
+                        <span>Vendas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="produtos">
+                        <i class="fas fa-box"></i>
+                        <span>Produtos</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="clientes">
+                        <i class="fas fa-users"></i>
+                        <span>Clientes</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="contas-receber">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Contas a Receber</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="caixa">
+                        <i class="fas fa-wallet"></i>
+                        <span>Caixa</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="relatorios">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Relatórios</span>
+                    </a>
+                </li>
+                <li class="nav-item admin-only">
+                    <a href="#" class="nav-link" data-page="configuracoes">
+                        <i class="fas fa-cog"></i>
+                        <span>Configurações</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-content">
+            <!-- Dashboard -->
+            <div id="dashboard" class="page active">
+                <div class="page-header">
+                    <h1>Dashboard</h1>
+                    <p>Visão geral da cantina</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Vendas Hoje</h3>
+                            <p class="stat-value" id="vendasHoje">R$ 0,00</p>
+                            <span class="stat-change positive">+12% vs ontem</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Total a Receber</h3>
+                            <p class="stat-value" id="totalReceber">R$ 0,00</p>
+                            <span class="stat-change">5 clientes devendo</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon success">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Saldo em Caixa</h3>
+                            <p class="stat-value" id="saldoCaixa">R$ 0,00</p>
+                            <span class="stat-change">Dinheiro físico</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon info">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Produto do Dia</h3>
+                            <p class="stat-value" id="produtoDia">Pastel</p>
+                            <span class="stat-change">15 vendidos</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="chart-card">
+                        <h3>Vendas dos Últimos 7 Dias</h3>
+                        <div class="chart-container">
+                            <canvas id="vendasChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="devedores-card">
+                        <h3>Maiores Devedores</h3>
+                        <div class="devedores-list" id="devedoresList">
+                            <div class="devedor-item">
+                                <div class="devedor-info">
+                                    <span class="devedor-nome">João Silva</span>
+                                    <span class="devedor-telefone">(11) 99999-1111</span>
+                                </div>
+                                <span class="devedor-valor">R$ 25,00</span>
+                            </div>
+                            <div class="devedor-item">
+                                <div class="devedor-info">
+                                    <span class="devedor-nome">Maria Santos</span>
+                                    <span class="devedor-telefone">(11) 99999-2222</span>
+                                </div>
+                                <span class="devedor-valor">R$ 18,50</span>
+                            </div>
+                        </div>
+                        <button class="btn-secondary btn-sm">Ver Todos</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Outras páginas serão adicionadas aqui -->
+            <div id="vendas" class="page">
+                <div class="page-header">
+                    <h1>Frente de Caixa</h1>
+                    <p>Realizar vendas</p>
+                </div>
+                <!-- Seção Vendas -->
+<section id="vendas-page" class="page hidden">
+    <div class="page-header">
+        <h1>Frente de Caixa</h1>
+        <p>Realizar vendas</p>
+    </div>
+    <div class="page-content">
+        <div class="frente-caixa-container">
+            <div class="frente-caixa-left">
+                <div class="search-container">
+                    <input type="text" id="search-product-input" placeholder="Buscar produto por nome ou código...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="product-list-container">
+                    <!-- Os produtos serão inseridos aqui via JS -->
+                </div>
+            </div>
+            <div class="frente-caixa-right">
+                <div class="cart-container">
+                    <h2>Carrinho</h2>
+                    <div class="cart-items">
+                        <!-- Itens do carrinho serão inseridos aqui -->
+                    </div>
+                    <div class="cart-summary">
+                        <div class="summary-item">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal">R$ 0,00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Desconto</span>
+                            <span id="cart-discount">R$ 0,00</span>
+                        </div>
+                        <div class="summary-item total">
+                            <span>Total</span>
+                            <span id="cart-total">R$ 0,00</span>
+                        </div>
+                    </div>
+                    <div class="cart-actions">
+                        <button class="btn btn-primary btn-block" id="finalize-sale-btn">Finalizar Venda</button>
+                        <button class="btn btn-danger btn-block" id="cancel-sale-btn">Cancelar Venda</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+            </div>
+
+            <div id="produtos" class="page">
+                <div class="page-header">
+                    <h1>Produtos</h1>
+                    <p>Gerenciar produtos da cantina</p>
+                    <button id="btnNovoProduto" class="btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Novo Produto
+                    </button>
+                </div>
+                
+                <!-- Filtros e Busca -->
+                <div class="filters-section">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchProdutos" placeholder="Buscar produtos...">
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="todos">Todos</button>
+                        <button class="filter-btn" data-filter="ativo">Ativos</button>
+                        <button class="filter-btn" data-filter="inativo">Inativos</button>
+                    </div>
+                </div>
+                
+                <!-- Lista de Produtos -->
+                <div class="produtos-grid" id="produtosGrid">
+                    <!-- Produtos serão carregados aqui via JavaScript -->
+                </div>
+                
+                <!-- Modal de Cadastro/Edição de Produto -->
+                <div id="modalProduto" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="modalProdutoTitle">Novo Produto</h3>
+                            <button class="modal-close" id="modalProdutoClose">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <form id="formProduto" class="modal-body">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="produtoNome">Nome do Produto *</label>
+                                    <input type="text" id="produtoNome" name="nome" required placeholder="Ex: Pastel de Carne">
+                                </div>
+                                <div class="form-group">
+                                    <label for="produtoCategoria">Categoria</label>
+                                    <select id="produtoCategoria" name="categoria">
+                                        <option value="salgados">Salgados</option>
+                                        <option value="doces">Doces</option>
+                                        <option value="bebidas">Bebidas</option>
+                                        <option value="lanches">Lanches</option>
+                                        <option value="outros">Outros</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="produtoPreco">Preço (R$) *</label>
+                                    <input type="number" id="produtoPreco" name="preco" step="0.01" min="0" required placeholder="0,00">
+                                </div>
+                                <div class="form-group">
+                                    <label for="produtoCusto">Custo (R$)</label>
+                                    <input type="number" id="produtoCusto" name="custo" step="0.01" min="0" placeholder="0,00">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="produtoEstoque">Controlar Estoque?</label>
+                                    <select id="produtoEstoque" name="controlar_estoque">
+                                        <option value="false">Não</option>
+                                        <option value="true">Sim</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="quantidadeGroup" style="display: none;">
+                                    <label for="produtoQuantidade">Quantidade em Estoque</label>
+                                    <input type="number" id="produtoQuantidade" name="quantidade_estoque" min="0" placeholder="0">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="produtoDescricao">Descrição</label>
+                                <textarea id="produtoDescricao" name="descricao" rows="3" placeholder="Descrição opcional do produto"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="produtoAtivo" name="ativo" checked>
+                                    Produto ativo
+                                </label>
+                            </div>
+                        </form>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn-secondary" id="btnCancelarProduto">Cancelar</button>
+                            <button type="submit" form="formProduto" class="btn-primary" id="btnSalvarProduto">
+                                <i class="fas fa-save"></i>
+                                Salvar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="clientes" class="page">
+                <div id="content">
+                    <div class="page-header">
+                        <h1>Clientes</h1>
+                        <p>Gerenciar clientes</p>
+                    </div>
+                    <div class="clientes-container">
+                        <p>Carregando clientes...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="contas-receber" class="page">
+                <div class="page-header">
+                    <h1>Contas a Receber</h1>
+                    <p>Gerenciar dívidas dos clientes</p>
+                </div>
+                <div class="contas-container">
+                    <p>Módulo de contas a receber em desenvolvimento...</p>
+                </div>
+            </div>
+
+            <div id="caixa" class="page">
+                <div class="page-header">
+                    <h1>Caixa</h1>
+                    <p>Controle de caixa</p>
+                </div>
+                <div class="caixa-container">
+                    <p>Módulo de caixa em desenvolvimento...</p>
+                </div>
+            </div>
+
+            <div id="relatorios" class="page">
+                <div class="page-header">
+                    <h1>Relatórios</h1>
+                    <p>Análises e relatórios</p>
+                </div>
+                <div class="relatorios-container">
+                    <p>Módulo de relatórios em desenvolvimento...</p>
+                </div>
+            </div>
+
+            <div id="configuracoes" class="page">
+                <div class="page-header">
+                    <h1>Configurações</h1>
+                    <p>Configurações do sistema</p>
+                </div>
+                <div class="configuracoes-container">
+                    <p>Módulo de configurações em desenvolvimento...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Clientes -->
+    <div id="clientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="clientModalTitle">Novo Cliente</h2>
+                <button class="modal-close" id="btnFecharClientModal">&times;</button>
+            </div>
+            
+            <form id="formClient">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="clienteNome">Nome Completo *</label>
+                        <input type="text" id="clienteNome" name="nome" required placeholder="Nome completo do cliente">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="clienteTelefone">Telefone</label>
+                        <input type="tel" id="clienteTelefone" name="telefone" placeholder="(11) 99999-9999">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="clienteEmail">Email</label>
+                        <input type="email" id="clienteEmail" name="email" placeholder="cliente@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="clienteEndereco">Endereço</label>
+                        <input type="text" id="clienteEndereco" name="endereco" placeholder="Endereço completo">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="clienteObservacoes">Observações</label>
+                    <textarea id="clienteObservacoes" name="observacoes" rows="3" placeholder="Observações sobre o cliente"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="clienteAtivo" name="ativo" checked>
+                        Cliente ativo
+                    </label>
+                </div>
+            </form>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="btnCancelarClient">Cancelar</button>
+                <button type="submit" form="formClient" class="btn-primary" id="btnSalvarClient">
+                    <i class="fas fa-save"></i>
+                    Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Carregando...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>
+
